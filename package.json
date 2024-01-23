@@ -9,9 +9,9 @@
   ],
   "scripts": {
     "develop": "gatsby develop",
-    "build": "gatsby develop",
-    "start": "gatsby build",
-    "serve": "gatsby serve",
+    "dev": "gatsby develop",
+    "build": "gatsby build",
+    "start": "gatsby serve",
     "clean": "gatsby clean"
   },
   "dependencies": {
