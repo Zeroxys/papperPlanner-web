@@ -22,7 +22,7 @@ const IndexPage = () => {
     const socket = createSocket("123123123");
     socket.emit("registerWeb", "webClientId");
 
-    // Escuchar mensajes desde React Native
+    // Escuchar mensajes desde la app
     socket.on("mensajeDesdeReactNative", (datos) => {
       console.log("Mensaje desde React Native:", datos);
     });
