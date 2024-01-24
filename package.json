@@ -11,7 +11,7 @@
     "develop": "gatsby develop",
     "dev": "gatsby develop",
     "build": "gatsby build",
-    "start": "node serve -p ${PORT}",
+    "start": "gatsby serve",
     "clean": "gatsby clean",
     "prod": "npm run build && npm run start"
   },
