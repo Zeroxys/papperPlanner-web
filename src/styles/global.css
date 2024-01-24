@@ -2,6 +2,11 @@ html,
 body {
   margin: 0;
   padding: 0;
+  font-family: "Open Sans";
+  background-color: lightgrey;
+}
+title h1 h2 p span {
+  font-family: "Open Sans";
 }
 #___gatsby {
   width: 100%;

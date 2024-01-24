@@ -54,10 +54,9 @@ const Schedule = () => {
         onRequestClose={closeModal}
         contentLabel="Formulario de Reserva"
         css={modalStyles}
-        closeTimeoutMS={300} // Agrega esta línea para controlar el tiempo de animación de cierre
+        closeTimeoutMS={300}
       >
         <h2>Reserva de Evento</h2>
-        {/* Agrega aquí tu formulario de reserva */}
         <button onClick={handleEventBooking}>Reservar</button>
         <button onClick={closeModal}>Cancelar</button>
       </Modal>
@@ -67,16 +66,15 @@ const Schedule = () => {
 
 const container = css`
   flex: 1;
-  width: 90%;
 `;
 
 const timeSlot = css`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  padding: 8px 16px;
+  justify-content: space-around;
   border-bottom: 1px solid lightgray;
   height: 70px;
+  max-width: 800px;
   align-items: center;
 `;
 
@@ -87,15 +85,13 @@ const timeLabel = css`
 `;
 
 const eventButtonContainer = css`
-  // border: 2px solid black;
-  width: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 const eventButton = css`
-  width: 70%;
+  width: 200px;
   border: 1px solid ${colors.purple};
   border-radius: 20px;
   height: 40px;
@@ -108,25 +104,25 @@ const eventButton = css`
 `;
 
 const eventButtonText = css`
+  font-family: "Open Sans";
+  font-size: 14px;
   color: ${colors.pink};
   font-weight: bold;
   cursor: pointer;
 `;
 
 const modalStyles = css`
-  border: 2px solid red;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  border: 2px solid ${colors.purple};
   width: 300px;
+  min-height: 50%;
   margin: auto;
   padding: 20px;
   background-color: white;
   border-radius: 10px;
-  transition: transform 0.3s ease-in-out;
-  // &:focus {
-  //   outline: none;
-  // }
-  // &:active {
-  //   transform: scale(0.98);
-  // }
   position: absolute;
   top: 50%;
   left: 50%;

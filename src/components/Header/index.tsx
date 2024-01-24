@@ -4,24 +4,19 @@ import colors from "../../utils/colors";
 
 const Header = ({ back = false, title }) => {
   return (
-    <div css={styles.container}>
-      <div css={styles.mainContainer}>
-        <div css={styles.title}>{title}</div>
-      </div>
+    <div css={styles.mainContainer}>
+      <div css={styles.title}>{title}</div>
     </div>
   );
 };
 
 const styles = {
-  container: css`
-    background-color: ${colors.white};
-    height: 60px;
-  `,
   icon: css`
     margin-right: 0;
   `,
   mainContainer: css`
-    height: 40px;
+    display: flex;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,6 +31,7 @@ const styles = {
     left: 20px;
   `,
   title: css`
+    font-family: "Open Sans";
     color: ${colors.white};
     font-weight: bold;
     font-size: 22px;
