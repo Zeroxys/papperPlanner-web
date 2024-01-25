@@ -71,7 +71,6 @@ const styles = {
     align-items: center;
     justify-content: center;
     width: 95%;
-    // height: 70px;
     padding: 10px 0 0 10px;
   `,
   daysContainer: css`
