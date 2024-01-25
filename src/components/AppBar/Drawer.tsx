@@ -10,8 +10,13 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { css } from "@emotion/react";
 import colors from "../../utils/colors";
+import { useSelector } from "react-redux";
 
 const DrawerMenu = ({ openDrawer, onClose }) => {
+  const user = useSelector((state) => state.user);
+
+  console.log(user);
+
   const Lists = ({ anchor }) => (
     <Box
       // role="presentation"

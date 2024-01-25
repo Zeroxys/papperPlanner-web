@@ -3,23 +3,21 @@
 import React, { useState } from "react";
 import { navigate } from "gatsby";
 import { css } from "@emotion/react";
+import { useDispatch } from "react-redux";
 import { Button, TextField, Switch } from "@mui/material";
 import fakeAuthService from "../../utils/apiFetch";
 import colors from "../../utils/colors";
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
     const isAuthenticated = fakeAuthService.login(username, password);
-
-    if (isAuthenticated) {
-      navigate("/dashboard");
-    } else {
-      console.error("Inicio de sesión fallido");
-    }
+    dispatch({ type: "LOGIN", payload: { user: "Miguel" } });
+    navigate("/");
   };
 
   const label = { inputProps: { "aria-label": "Switch demo" } };
@@ -55,7 +53,11 @@ const LoginForm = () => {
           Guardar
         </div>
 
-        <Button variant="container" css={styles.buttonStyles}>
+        <Button
+          onClick={handleLogin}
+          variant="container"
+          css={styles.buttonStyles}
+        >
           Iniciar sesión
         </Button>
       </div>
