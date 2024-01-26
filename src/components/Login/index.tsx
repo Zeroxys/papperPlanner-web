@@ -15,6 +15,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import useApiFetch from "../../utils/apiFetch";
 import colors from "../../utils/colors";
 import ModalCustom from "../ModalCustom";
+import { enableBackdropAction } from "../../redux/actions/authActions";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -26,12 +27,12 @@ const LoginForm = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    dispatch({ type: "ENABLE_BACKDROP" });
+    dispatch(enableBackdropAction());
     const res = await fetchApi("POST", "/auth/login", {
       email: username,
       password,
     });
-    dispatch({ type: "ENABLE_BACKDROP" });
+    dispatch(enableBackdropAction());
 
     if (res.success) {
       navigate("/");

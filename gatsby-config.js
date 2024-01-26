@@ -12,20 +12,20 @@ module.exports = {
     siteUrl: `https://www.yourdomain.tld`,
   },
   plugins: [
-    {
-      resolve: `gatsby-plugin-react-redux`,
-      options: {
-        pathToCreateStoreModule: "./src/redux/store/index",
-        serialize: {
-          space: 0,
-          isJSON: true,
-          unsafe: false,
-          ignoreFunction: true,
-        },
-        cleanupOnClient: true,
-        windowKey: "__PRELOADED_STATE__",
-      },
-    },
+    // {
+    //   resolve: `gatsby-plugin-react-redux`,
+    //   options: {
+    //     pathToCreateStoreModule: "./src/redux/store/index.tsx",
+    //     serialize: {
+    //       space: 0,
+    //       isJSON: true,
+    //       unsafe: false,
+    //       ignoreFunction: true,
+    //     },
+    //     cleanupOnClient: true,
+    //     windowKey: "__PRELOADED_STATE__",
+    //   },
+    // },
     "gatsby-plugin-emotion",
     {
       resolve: `gatsby-omni-font-loader`,
