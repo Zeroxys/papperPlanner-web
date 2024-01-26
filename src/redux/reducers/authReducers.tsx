@@ -1,10 +1,15 @@
+import { createSlice } from "@reduxjs/toolkit";
+
 const initialState = {
-  user: null,
+  user: {},
   isLoggedIn: false,
   enableBackdrop: false,
 };
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (
+  state = initialState,
+  action: { type: any; payload: any }
+) => {
   switch (action.type) {
     case "LOGIN":
       return {

@@ -13,9 +13,23 @@ module.exports = {
   },
   plugins: [
     // {
+    //   resolve: `gatsby-plugin-react-redux-persist`,
+    //   options: {
+    //     pathToCreateStoreModule: "./src/redux/store",
+    //     serialize: {
+    //       space: 0,
+    //       isJSON: true,
+    //       unsafe: false,
+    //       ignoreFunction: true,
+    //     },
+    //     cleanupOnClient: true,
+    //     windowKey: "__PRELOADED_STATE__",
+    //   },
+    // },
+    // {
     //   resolve: `gatsby-plugin-react-redux`,
     //   options: {
-    //     pathToCreateStoreModule: "./src/redux/store/index.tsx",
+    //     pathToCreateStoreModule: "./src/redux/store",
     //     serialize: {
     //       space: 0,
     //       isJSON: true,
