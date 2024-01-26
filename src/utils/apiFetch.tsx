@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+// import { useSelector, useDispatch } from "react-redux";
 // import { setBearerInfoAction } from "../redux/actions/authActions/actions";
 
 const useApiFetch = () => {
   const API_URL = process.env.API_URL;
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   // const { bearerToken, refreshToken, userId, bearerInfo } = useSelector(
   //   ({ auth }) => auth
   // );
@@ -34,7 +34,7 @@ const useApiFetch = () => {
       ...(method !== "GET" && { body: body ? JSON.stringify(body) : formData }),
     };
 
-    console.log("===>", `${API_URL}${path}`);
+    console.log("===>", process.env.API_URL, `${API_URL}${path}`);
 
     try {
       if (true) {
