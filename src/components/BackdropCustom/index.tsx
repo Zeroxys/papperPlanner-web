@@ -8,6 +8,7 @@ import colors from "../../utils/colors";
 
 const BackdropCustom = () => {
   const enableBackdrop = useSelector(({ auth }) => auth.enableBackdrop);
+  console.log(enableBackdrop);
   return (
     <Backdrop
       sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}

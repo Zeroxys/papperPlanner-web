@@ -1,11 +1,17 @@
-import { legacy_createStore as createStore, combineReducers } from "redux";
+import {
+  legacy_createStore as createStore,
+  combineReducers,
+  applyMiddleware,
+} from "redux";
 import authReducer from "../reducers/authReducers";
 
 const rootReducer = combineReducers({
   auth: authReducer,
 });
 
-// TODO AGREGAR PERSIST AL STORE :v
-const store = createStore(rootReducer);
+const store = (preloaded) => {
+  console.log(preloaded);
+  return createStore(rootReducer);
+};
 
 export default store;

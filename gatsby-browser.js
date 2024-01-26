@@ -6,7 +6,7 @@ import BackdropCustom from "./src/components/BackdropCustom";
 
 export const wrapRootElement = ({ element }) => {
   return (
-    <Provider store={store}>
+    <Provider store={store()}>
       <BackdropCustom />
       {element}
     </Provider>
