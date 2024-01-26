@@ -4,26 +4,49 @@ import React, { useState } from "react";
 import { navigate } from "gatsby";
 import { css } from "@emotion/react";
 import { useDispatch } from "react-redux";
-import { Button, TextField, Switch } from "@mui/material";
-import fakeAuthService from "../../utils/apiFetch";
+import {
+  Button,
+  TextField,
+  Switch,
+  IconButton,
+  InputAdornment,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import useApiFetch from "../../utils/apiFetch";
 import colors from "../../utils/colors";
+import ModalCustom from "../ModalCustom";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const { fetchApi, error } = useApiFetch();
+  const [openModal, setOpenModal] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const isAuthenticated = fakeAuthService.login(username, password);
-    dispatch({ type: "LOGIN", payload: { user: "Miguel" } });
-    navigate("/");
+    dispatch({ type: "ENABLE_BACKDROP" });
+    const res = await fetchApi("POST", "/auth/login", {
+      email: username,
+      password,
+    });
+    dispatch({ type: "ENABLE_BACKDROP" });
+
+    if (res.success) {
+      navigate("/");
+    } else {
+      setOpenModal(true);
+    }
+
+    console.log(res);
   };
 
   const label = { inputProps: { "aria-label": "Switch demo" } };
 
   return (
     <form onSubmit={handleLogin} css={styles.formStyles}>
+      <ModalCustom open={openModal} setOpen={setOpenModal} message={error} />
       <div css={styles.circle}>
         <div css={styles.circleInside}>
           <p>👨‍💻</p>
@@ -32,20 +55,36 @@ const LoginForm = () => {
 
       <div css={styles.container}>
         <TextField
-          id="outlined-password-input"
-          label="Username"
+          id="username"
+          label="Email"
           type="text"
           color="secondary"
           css={styles.inputStyles}
+          value={username}
+          onChange={({ target }) => setUsername(target.value)}
         />
 
         <TextField
-          id="outlined-password-input"
+          id="password"
           label="Password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           autoComplete="current-password"
           color="secondary"
           css={styles.inputStyles}
+          value={password}
+          onChange={({ target }) => setPassword(target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <IconButton
+                  onClick={() => setShowPassword(!showPassword)}
+                  edge="start"
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
 
         <div>
@@ -74,12 +113,13 @@ const styles = {
     min-width: 500px;
     max-width: 700px;
     height: 500px;
-    border-radius: 20px;
     position: relative;
     background-color: white;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     margin: 0 auto;
     padding: 20px;
+    position: absolute;
+    bottom: 10%;
 
     @media (max-width: 600px) {
       min-width: 80%;
@@ -147,6 +187,9 @@ const styles = {
     width: 100%;
     background-color: ${colors.purple};
     color: white;
+    &:hover {
+      background-color: ${colors.darkpink};
+    }
   `,
 };
 
