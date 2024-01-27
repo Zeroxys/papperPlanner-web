@@ -1,8 +1,11 @@
-// if (!process.env.GATSBY_DEBUG_MODE) {
-//   require("dotenv").config({
-//     path: `.env.development`,
-//   });
-// }
+/**
+ * @type {import('gatsby').GatsbyConfig}
+ */
+
+if (!process.env.DEBUG_MODE)
+  require("dotenv").config({
+    path: `.env`,
+  });
 
 module.exports = {
   siteMetadata: {
