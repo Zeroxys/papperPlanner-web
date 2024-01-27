@@ -34,7 +34,7 @@ const useApiFetch = () => {
       ...(method !== "GET" && { body: body ? JSON.stringify(body) : formData }),
     };
 
-    console.log("===>", process.env.API_URL, `${API_URL}${path}`);
+    console.log("===>", process.env.GATSBY_API_URL, `${API_URL}${path}`);
 
     try {
       if (true) {

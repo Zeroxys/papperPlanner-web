@@ -2,11 +2,6 @@
  * @type {import('gatsby').GatsbyConfig}
  */
 
-// if (!process.env.DEBUG_MODE)
-//   require("dotenv").config({
-//     path: `.env`,
-//   });
-
 module.exports = {
   siteMetadata: {
     title: `papperPlannerWeb`,
