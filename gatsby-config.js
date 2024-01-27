@@ -12,7 +12,6 @@ module.exports = {
     siteUrl: `https://www.yourdomain.tld`,
   },
   plugins: [
-    require("dotenv").config(),
     "gatsby-plugin-emotion",
     {
       resolve: `gatsby-omni-font-loader`,
