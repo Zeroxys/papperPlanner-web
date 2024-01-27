@@ -1,6 +1,6 @@
 if (!process.env.GATSBY_DEBUG_MODE) {
   require("dotenv").config({
-    path: `.env`,
+    path: `.env.production`,
   });
 }
 
