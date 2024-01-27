@@ -38,7 +38,10 @@ const useApiFetch = () => {
 
     try {
       if (true) {
-        const res = await fetch(`${API_URL}${path}`, options);
+        const res = await fetch(
+          `${process.env.GATSBY_API_URL}${path}`,
+          options
+        );
         const data = await res.json();
         setLoading(false);
         if (!data.succes) setError(data.error);

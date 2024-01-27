@@ -1,10 +1,8 @@
-/**
- * @type {import('gatsby').GatsbyConfig}
- */
-
-require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`,
-});
+if (!process.env.GATSBY_DEBUG_MODE) {
+  require("dotenv").config({
+    path: `.env`,
+  });
+}
 
 module.exports = {
   siteMetadata: {
