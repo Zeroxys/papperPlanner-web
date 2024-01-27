@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 import { useState } from "react";
 // import { useSelector, useDispatch } from "react-redux";
 // import { setBearerInfoAction } from "../redux/actions/authActions/actions";
