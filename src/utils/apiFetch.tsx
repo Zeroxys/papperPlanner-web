@@ -3,7 +3,7 @@ import { useState } from "react";
 // import { setBearerInfoAction } from "../redux/actions/authActions/actions";
 
 const useApiFetch = () => {
-  const API_URL = process.env.API_URL;
+  const API_URL = process.env.GATSBY_API_URL;
   // const dispatch = useDispatch();
   // const { bearerToken, refreshToken, userId, bearerInfo } = useSelector(
   //   ({ auth }) => auth
