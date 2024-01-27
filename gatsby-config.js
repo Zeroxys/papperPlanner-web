@@ -1,8 +1,8 @@
-if (!process.env.GATSBY_DEBUG_MODE) {
-  require("dotenv").config({
-    path: `.env.production`,
-  });
-}
+// if (!process.env.GATSBY_DEBUG_MODE) {
+//   require("dotenv").config({
+//     path: `.env.development`,
+//   });
+// }
 
 module.exports = {
   siteMetadata: {
