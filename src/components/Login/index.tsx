@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { navigate } from "gatsby";
 import { css } from "@emotion/react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
   TextField,
@@ -12,41 +12,45 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import useApiFetch from "../../utils/apiFetch";
+import useApiFetch from "../../hooks/apiFetch";
 import colors from "../../utils/colors";
 import ModalCustom from "../ModalCustom";
-import { enableBackdropAction } from "../../redux/actions/authActions";
+import {
+  enableBackdropAction,
+  enableSaveUser,
+  setLoginSuccess,
+} from "../../redux/actions/authActions";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const saveSwitchUser = useSelector(({ auth }) => auth.saveSwitchUser);
   const { fetchApi, error } = useApiFetch();
   const [openModal, setOpenModal] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const handleLogin = async () => {
     dispatch(enableBackdropAction());
     const res = await fetchApi("POST", "/auth/login", {
       email: username,
       password,
     });
-    dispatch(enableBackdropAction());
 
     if (res.success) {
-      navigate("/");
+      dispatch(setLoginSuccess(res));
     } else {
+      dispatch(enableBackdropAction());
       setOpenModal(true);
     }
-
-    console.log(res);
   };
 
-  const label = { inputProps: { "aria-label": "Switch demo" } };
+  const handleSwitchChange = () => {
+    dispatch(enableSaveUser());
+  };
 
   return (
-    <form onSubmit={handleLogin} css={styles.formStyles}>
+    <form css={styles.formStyles}>
       <ModalCustom open={openModal} setOpen={setOpenModal} message={error} />
       <div css={styles.circle}>
         <div css={styles.circleInside}>
@@ -89,7 +93,12 @@ const LoginForm = () => {
         />
 
         <div>
-          <Switch {...label} defaultChecked />
+          <Switch
+            css={styles.switchStyle}
+            defaultChecked={saveSwitchUser}
+            color="secondary"
+            onChange={handleSwitchChange}
+          />
           Guardar
         </div>
 

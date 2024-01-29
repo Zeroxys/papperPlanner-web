@@ -1,9 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
-
 const initialState = {
+  bearerToken: null,
+  refreshToken: null,
   user: {},
   isLoggedIn: false,
   enableBackdrop: false,
+  saveSwitchUser: false,
+  bearerInfo: {
+    createdAt: null,
+    expirationDate: null,
+  },
+  userId: null,
+  rememberMe: null,
+  loginCount: 0,
 };
 
 const authReducer = (
@@ -23,11 +31,24 @@ const authReducer = (
         user: null,
         isLoggedIn: false,
       };
+    case "SET_BEARER_INFO":
+      return {
+        ...state,
+        bearerToken: action.token,
+        bearerInfo: { ...action.payload },
+      };
     case "ENABLE_BACKDROP":
       return {
         ...state,
         enableBackdrop: !state.enableBackdrop,
       };
+    case "ENABLE_SAVE_USER":
+      return {
+        ...state,
+        saveSwitchUser: !state.saveUser,
+      };
+    case "LOGIN_SUCCESS":
+      return { ...state, ...action.payload };
     default:
       return state;
   }
