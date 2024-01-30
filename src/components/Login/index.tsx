@@ -1,7 +1,6 @@
 // src/components/LoginForm.js
 
 import React, { useState } from "react";
-import { navigate } from "gatsby";
 import { css } from "@emotion/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -13,25 +12,25 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import useApiFetch from "../../hooks/apiFetch";
-import colors from "../../utils/colors";
 import ModalCustom from "../ModalCustom";
+import { setLoginSuccess } from "../../redux/actions/authActions";
 import {
+  enableSaveUserAction,
   enableBackdropAction,
-  enableSaveUser,
-  setLoginSuccess,
-} from "../../redux/actions/authActions";
+} from "../../redux/actions/userActions";
+import colors from "../../utils/colors";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const saveSwitchUser = useSelector(({ auth }) => auth.saveSwitchUser);
   const { fetchApi, error } = useApiFetch();
   const [openModal, setOpenModal] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const saveSwitchUser = useSelector(({ user }) => user.saveSwitchUser);
 
   const handleLogin = async () => {
-    dispatch(enableBackdropAction());
+    dispatch(enableBackdropAction(true));
     const res = await fetchApi("POST", "/auth/login", {
       email: username,
       password,
@@ -40,13 +39,13 @@ const LoginForm = () => {
     if (res.success) {
       dispatch(setLoginSuccess(res));
     } else {
-      dispatch(enableBackdropAction());
+      dispatch(enableBackdropAction(false));
       setOpenModal(true);
     }
   };
 
   const handleSwitchChange = () => {
-    dispatch(enableSaveUser());
+    dispatch(enableSaveUserAction());
   };
 
   return (

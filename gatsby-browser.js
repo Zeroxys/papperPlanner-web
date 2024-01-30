@@ -7,17 +7,6 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "./src/redux/store";
 import "./src/styles/global.css";
 
-const PrivateRoute = ({ component: Component, ...props }) => {
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-
-  if (!isLoggedIn) {
-    navigate("/login");
-    return null;
-  }
-
-  return <Component {...props} />;
-};
-
 export const wrapRootElement = ({ element }) => {
   return (
     <Provider store={store}>
@@ -30,16 +19,16 @@ export const wrapRootElement = ({ element }) => {
 };
 
 export const wrapPageElement = ({ element, props }) => {
-  console.log(store.getState().auth);
+  // console.log(store.getState().auth);
 
-  const isLoggedIn = useSelector((state) => state.auth.bearerToken);
+  // const isLoggedIn = store.getState().auth.bearerToken;
 
-  useEffect(() => {
-    if (!isLoggedIn) {
-      navigate("/login");
-      return null;
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!isLoggedIn) {
+  //     navigate("/login");
+  //     return null;
+  //   }
+  // }, []);
 
   return element;
 };

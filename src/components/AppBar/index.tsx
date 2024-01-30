@@ -9,7 +9,6 @@ import {
   MenuItem,
   ListItemIcon,
 } from "@mui/material";
-import { navigate } from "gatsby";
 import { useDispatch, useSelector } from "react-redux";
 import MenuIcon from "@mui/icons-material/Menu";
 import { css } from "@emotion/react";
@@ -18,26 +17,31 @@ import useApiFetch from "../../hooks/apiFetch";
 import colors from "../../utils/colors";
 import DrawerMenu from "./Drawer";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import { enableBackdropAction } from "../../redux/actions/authActions";
+import {
+  enableBackdropAction,
+  setUserAction,
+} from "../../redux/actions/userActions";
+import { setLogOutAction } from "../../redux/actions/authActions";
 
 const MenuBar = () => {
   const dispatch = useDispatch();
   const { fetchApi } = useApiFetch();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
-  const auth = useSelector(({ auth }) => auth);
+  const { userId, refreshToken } = useSelector(({ auth }) => auth);
+  const user = useSelector(({ user }) => user);
 
   useEffect(() => {
     getUser();
   }, []);
 
   const getUser = async () => {
-    const data = await fetchApi("GET", `/users/${auth.userId}`);
+    const data = await fetchApi("GET", `/users/${userId}`);
     if (data.success) {
       const { user } = data;
-      delete user.__v;
-      dispatch(enableBackdropAction());
+      dispatch(setUserAction(user));
     }
+    dispatch(enableBackdropAction(false));
   };
 
   const handleDrawerOpen = () => {
@@ -52,9 +56,18 @@ const MenuBar = () => {
     setOpenMenu(true);
   };
 
-  const handleClose = () => {
-    navigate("/login");
+  const handleCloseMenu = () => {
     setOpenMenu(!openMenu);
+  };
+
+  const handleCloseSession = async () => {
+    setOpenMenu(!openMenu);
+    const res = await fetchApi("POST", "/auth/logout", {
+      refreshToken,
+      userId,
+    });
+    console.log("res logout", res);
+    dispatch(setLogOutAction());
   };
 
   return (
@@ -102,9 +115,9 @@ const MenuBar = () => {
               horizontal: "right",
             }}
             open={openMenu}
-            onClose={handleClose}
+            onClose={handleCloseMenu}
           >
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={handleCloseSession}>
               <ListItemIcon>
                 <LogoutIcon fontSize="small" />
               </ListItemIcon>

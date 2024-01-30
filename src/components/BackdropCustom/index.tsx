@@ -7,8 +7,7 @@ import { Backdrop, CircularProgress } from "@mui/material";
 import colors from "../../utils/colors";
 
 const BackdropCustom = () => {
-  const enableBackdrop = useSelector(({ auth }) => auth.enableBackdrop);
-  console.log(enableBackdrop);
+  const enableBackdrop = useSelector(({ user }) => user.enableBackdrop);
   return (
     <Backdrop
       sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}

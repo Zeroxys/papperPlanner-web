@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Drawer, Box } from "@mui/material";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -7,33 +7,53 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
+import CircularProgress from "@mui/material/CircularProgress";
 import MailIcon from "@mui/icons-material/Mail";
 import { css } from "@emotion/react";
 import colors from "../../utils/colors";
+import useApiFetch from "../../hooks/apiFetch";
 import { useSelector } from "react-redux";
 
 const DrawerMenu = ({ openDrawer, onClose }) => {
-  const user = useSelector((state) => state.user);
+  const { fetchApi, loading } = useApiFetch();
+  const { user } = useSelector(({ user }) => user);
+  const [imageURI, setImageURI] = useState("");
 
-  console.log(user);
+  useEffect(() => {
+    getProfileImage();
+  }, []);
+
+  const getProfileImage = async () => {
+    const image = await fetchApi(
+      "GET",
+      "/profile-image/" + user?.settings?.profilePicture
+    );
+    setImageURI(image.result);
+  };
 
   const Lists = ({ anchor }) => (
-    <Box
-      // role="presentation"
-      // onClick={() => {}}
-      // onKeyDown={() => {}}
-      css={styles.menuContainer(anchor)}
-    >
+    <Box css={styles.menuContainer(anchor)}>
       <div css={styles.profileContainer}>
         <div css={styles.circle}>
-          <div css={styles.circlePic}></div>
+          <div css={styles.circlePic}>
+            {loading ? (
+              <CircularProgress />
+            ) : (
+              <img
+                css={styles.circlePic}
+                src={imageURI}
+                alt="Descripción de la imagen"
+                style={{ maxWidth: "100%", maxHeight: "100%" }}
+              />
+            )}
+          </div>
         </div>
-        <p>Miguel Angel Zavala</p>
-        <p>id : 1234123</p>
+        <p>{user.username}</p>
+        <p>{user.email}</p>
       </div>
       <Divider />
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+        {["Usuarios", "Calendario", "Correo"].map((text, index) => (
           <ListItem key={text}>
             <ListItemButton>
               <ListItemIcon>
@@ -46,7 +66,7 @@ const DrawerMenu = ({ openDrawer, onClose }) => {
       </List>
       <Divider />
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+        {["Configuraciones"].map((text, index) => (
           <ListItem key={text}>
             <ListItemButton>
               <ListItemIcon>
@@ -92,7 +112,9 @@ const styles = {
     width: 145px;
     height: 145px;
     border-radius: 100px;
-    background-color: ${colors.white};
+    justify-content: center;
+    align-items: center;
+    background-color: ${colors.blue};
   `,
 };
 

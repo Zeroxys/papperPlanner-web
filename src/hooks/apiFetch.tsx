@@ -17,7 +17,7 @@ const useApiFetch = () => {
   const fetchApi = async (
     method = "GET",
     path = "",
-    body = null,
+    body: {} = {},
     formData = null
   ) => {
     setLoading(true);
@@ -55,7 +55,6 @@ const useApiFetch = () => {
               body: JSON.stringify({ refreshToken, userId }),
             });
             const response = await res.json();
-            console.log("actualizanding el token", response);
             await dispatch(
               setBearerInfoAction({
                 token: response.bearerToken,
@@ -87,7 +86,6 @@ const useApiFetch = () => {
             body: JSON.stringify({ refreshToken, userId }),
           });
           const response = await res.json();
-          console.log("actualizanding el token", response);
           await dispatch(
             setBearerInfoAction({
               token: response.bearerToken,
