@@ -1,10 +1,12 @@
 import React from "react";
 // import { Link } from "gatsby";
 import { css } from "@emotion/react";
+import MenuBar from "../AppBar";
 
 const Layout = ({ children }) => {
   return (
     <div css={styles.layoutContainer}>
+      <MenuBar />
       <main css={styles.main}>{children}</main>
     </div>
   );

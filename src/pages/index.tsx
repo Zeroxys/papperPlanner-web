@@ -10,9 +10,9 @@ const IndexPage = () => {
   console.log(auth);
 
   return (
-    <div>
-      <MenuBar />
-    </div>
+    <Layout>
+      <h1>Holi</h1>
+    </Layout>
   );
 };
 

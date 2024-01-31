@@ -1,13 +1,22 @@
 import React from "react";
-import Layout from "../components/Layout";
+import { css } from "@emotion/react";
 import LoginForm from "../components/Login";
 
 const LoginPage = () => {
   return (
-    <Layout>
+    <div css={styles.container}>
       <LoginForm />
-    </Layout>
+    </div>
   );
+};
+
+const styles = {
+  container: css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+  `,
 };
 
 export default LoginPage;

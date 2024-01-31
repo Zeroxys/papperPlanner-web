@@ -27,7 +27,7 @@ const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const saveSwitchUser = useSelector(({ user }) => user.saveSwitchUser);
+  const { saveSwitchUser } = useSelector(({ user }) => user);
 
   const handleLogin = async () => {
     dispatch(enableBackdropAction(true));
