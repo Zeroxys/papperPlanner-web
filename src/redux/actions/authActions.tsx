@@ -1,5 +1,4 @@
 import { navigate } from "gatsby";
-import useApiFetch from "../../hooks/apiFetch";
 
 export const setBearerInfoAction = (bearerInfo) => {
   return {

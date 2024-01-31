@@ -28,6 +28,8 @@ const MenuBar = () => {
   const { fetchApi } = useApiFetch();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
   const { userId, refreshToken } = useSelector(({ auth }) => auth);
   const user = useSelector(({ user }) => user);
 
@@ -39,6 +41,7 @@ const MenuBar = () => {
     const data = await fetchApi("GET", `/users/${userId}`);
     if (data.success) {
       const { user } = data;
+      console.log(data);
       dispatch(setUserAction(user));
     }
     dispatch(enableBackdropAction(false));
@@ -52,7 +55,9 @@ const MenuBar = () => {
     setOpenDrawer(false);
   };
 
-  const handleMenu = () => {
+  const handleMenu = (e) => {
+    setAnchorEl(e.currentTarget);
+
     setOpenMenu(true);
   };
 
@@ -60,7 +65,8 @@ const MenuBar = () => {
     setOpenMenu(!openMenu);
   };
 
-  const handleCloseSession = async () => {
+  const handleCloseSession = async (e) => {
+    setAnchorEl(null);
     setOpenMenu(!openMenu);
     const res = await fetchApi("POST", "/auth/logout", {
       refreshToken,
@@ -103,6 +109,7 @@ const MenuBar = () => {
             <AccountCircle fontSize={"28"} />
           </IconButton>
           <Menu
+            anchorEl={anchorEl}
             id="menu-appbar"
             css={styles.menuOptions}
             anchorOrigin={{
