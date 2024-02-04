@@ -1,72 +1,146 @@
-import React from "react";
-import Box from "@mui/material/Box";
-import { DataGrid } from "@mui/x-data-grid";
-import { css } from "@emotion/react";
-
+import React, { useState, useEffect } from "react";
+import { Box } from "@mui/material";
 import Layout from "../components/Layout";
-
-const columns = [
-  { field: "id", headerName: "ID", width: 90 },
-  {
-    field: "firstName",
-    headerName: "First name",
-    width: 150,
-    editable: true,
-  },
-  {
-    field: "lastName",
-    headerName: "Last name",
-    width: 150,
-    editable: true,
-  },
-  {
-    field: "age",
-    headerName: "Age",
-    type: "number",
-    width: 110,
-    editable: true,
-  },
-  {
-    field: "fullName",
-    headerName: "Full name",
-    description: "This column has a value getter and is not sortable.",
-    sortable: false,
-    width: 160,
-    valueGetter: (params) =>
-      `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-  },
-];
-
-const rows = [
-  { id: 1, lastName: "Snow", firstName: "Jon", age: 14 },
-  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 31 },
-  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 31 },
-  { id: 4, lastName: "Stark", firstName: "Arya", age: 11 },
-  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-];
+import UserTypeLegend from "../components/UserTable/userTypes";
+import UserTable from "../components/UserTable";
+import useApiFetch from "../hooks/apiFetch";
+import { useDispatch } from "react-redux";
+import { css } from "@emotion/react";
+import { enableBackdropAction } from "../redux/actions/userActions";
+import UpdateUserModal from "../components/ModalCustom/UpdateUserModal";
+import DeleteUsersModal from "../components/ModalCustom/DeleteUsersModal";
+import CreateUserModal from "../components/ModalCustom/CreateUserModal";
 
 const IndexPage = () => {
+  const [rows, setRows] = useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openUpdateRoleModal, setOpenUpdateRoleModal] = useState(false);
+  const [openCreateUserModal, setOpenCreateUserModal] = useState(false);
+
+  const { fetchApi } = useApiFetch();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const handleSelectionChange = (newSelection) => {
+    setSelectedRows([...newSelection]);
+  };
+
+  const getUsers = async () => {
+    const res = await fetchApi("GET", "/users");
+
+    if (res.success) {
+      const formattedData = res.data.map((user) => ({
+        id: user._id,
+        lastName: user.username,
+        rol: user.role,
+        firstName: user.email,
+        age: user.loginCount,
+      }));
+
+      setRows(formattedData);
+    }
+  };
+
+  const deleteUsers = async () => {
+    const IDs = [...selectedRows].splice(" ").join(",");
+    dispatch(enableBackdropAction(true));
+    const res = await fetchApi("DELETE", `/users/${IDs}`);
+    dispatch(enableBackdropAction(false));
+    if (res.success) {
+      getUsers();
+    } else {
+      console.log(res);
+    }
+    setOpenDeleteModal(false);
+  };
+
+  const updateUser = async (role) => {
+    const id = selectedRows[0];
+    dispatch(enableBackdropAction(true));
+    const res = await fetchApi("PATCH", `/users/${id}`, { role });
+    setOpenUpdateRoleModal(false);
+    if (res.success) {
+      await getUsers();
+    } else {
+      console.log(res);
+    }
+    dispatch(enableBackdropAction(false));
+  };
+
+  const createuser = async (user) => {
+    dispatch(enableBackdropAction(true));
+    const res = await fetchApi("POST", `/users/create`, user);
+    if (res.success) {
+      await getUsers();
+    } else {
+      console.log(res);
+    }
+    dispatch(enableBackdropAction(false));
+  };
+
+  const handleDeleteSelected = () => {
+    setOpenDeleteModal(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setOpenDeleteModal(false);
+  };
+
+  const handleUpdateSelected = () => {
+    setOpenUpdateRoleModal(true);
+  };
+
+  const handleCloseUpdateRoleModal = () => {
+    setOpenUpdateRoleModal(false);
+  };
+
+  const handleCreatedSelected = () => {
+    setOpenCreateUserModal(true);
+  };
+
+  const handleCreateUser = async (userData) => {
+    createuser(userData);
+  };
+
+  const handleCloseCreateUserModal = () => {
+    setOpenCreateUserModal(false);
+  };
+
   return (
     <Layout>
+      <CreateUserModal
+        open={openCreateUserModal}
+        onClose={handleCloseCreateUserModal}
+        onCreateUser={handleCreateUser}
+      />
+
+      <UpdateUserModal
+        open={openUpdateRoleModal}
+        onClose={handleCloseUpdateRoleModal}
+        onUpdateRole={(newRole) => updateUser(newRole)}
+      />
+
+      <DeleteUsersModal
+        open={openDeleteModal}
+        onClose={handleCloseDeleteModal}
+        onConfirm={deleteUsers}
+      />
       <div css={styles.container}>
-        <Box css={styles.chartContainer}>
-          <DataGrid
+        <Box css={styles.tableContainer}>
+          <UserTypeLegend
+            handleCreatedSelected={handleCreatedSelected}
+            handleUpdateSelected={handleUpdateSelected}
+            handleDeleteSelected={handleDeleteSelected}
+            selectedRows={selectedRows}
+          />
+          <UserTable
+            loading={false}
             rows={rows}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: {
-                  pageSize: 5,
-                },
-              },
-            }}
-            pageSizeOptions={[5]}
-            checkboxSelection
-            disableRowSelectionOnClick
+            handleSelectionChange={handleSelectionChange}
           />
         </Box>
       </div>
@@ -79,14 +153,17 @@ const styles = {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: white;
     width: 100%;
     height: 100vh;
-    background-color: white;
   `,
-  chartContainer: css`
+  tableContainer: css`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
     width: 80%;
-    height: 50%;
-    background-color: white;
+    height: 70%;
   `,
 };
 

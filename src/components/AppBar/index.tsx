@@ -72,8 +72,11 @@ const MenuBar = () => {
       refreshToken,
       userId,
     });
-    console.log("res logout", res);
-    dispatch(setLogOutAction());
+
+    if (res.success) {
+      console.log("res logout", res);
+      dispatch(setLogOutAction());
+    }
   };
 
   return (
