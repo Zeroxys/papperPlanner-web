@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box } from "@mui/material";
+import { Box, Alert, Snackbar } from "@mui/material";
 import Layout from "../components/Layout";
 import UserTypeLegend from "../components/UserTable/userTypes";
 import UserTable from "../components/UserTable";
@@ -17,6 +17,8 @@ const IndexPage = () => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openUpdateRoleModal, setOpenUpdateRoleModal] = useState(false);
   const [openCreateUserModal, setOpenCreateUserModal] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
 
   const { fetchApi } = useApiFetch();
   const dispatch = useDispatch();
@@ -38,9 +40,8 @@ const IndexPage = () => {
         lastName: user.username,
         rol: user.role,
         firstName: user.email,
-        age: user.loginCount,
+        loginCount: user.loginCount,
       }));
-
       setRows(formattedData);
     }
   };
@@ -52,9 +53,12 @@ const IndexPage = () => {
     dispatch(enableBackdropAction(false));
     if (res.success) {
       getUsers();
+      setMessage(res.message);
     } else {
       console.log(res);
+      setMessage(res.message);
     }
+    setOpen(true);
     setOpenDeleteModal(false);
   };
 
@@ -65,9 +69,12 @@ const IndexPage = () => {
     setOpenUpdateRoleModal(false);
     if (res.success) {
       await getUsers();
+      setMessage(res.message);
     } else {
       console.log(res);
+      setMessage(res.message);
     }
+    setOpen(true);
     dispatch(enableBackdropAction(false));
   };
 
@@ -76,9 +83,12 @@ const IndexPage = () => {
     const res = await fetchApi("POST", `/users/create`, user);
     if (res.success) {
       await getUsers();
+      setMessage(res.message);
     } else {
-      console.log(res);
+      setMessage(res.error);
     }
+    setOpen(true);
+
     dispatch(enableBackdropAction(false));
   };
 
@@ -110,6 +120,13 @@ const IndexPage = () => {
     setOpenCreateUserModal(false);
   };
 
+  const handleClose = (reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
   return (
     <Layout>
       <CreateUserModal
@@ -130,6 +147,18 @@ const IndexPage = () => {
         onConfirm={deleteUsers}
       />
       <div css={styles.container}>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            variant="filled"
+            sx={{ width: "100%" }}
+            severity={message.includes("error") ? "error" : "success"}
+          >
+            {message}
+          </Alert>
+        </Snackbar>
+
         <Box css={styles.tableContainer}>
           <UserTypeLegend
             handleCreatedSelected={handleCreatedSelected}
