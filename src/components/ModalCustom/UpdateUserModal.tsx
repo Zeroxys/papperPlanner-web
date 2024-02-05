@@ -17,19 +17,32 @@ const UpdateUserModal = ({ open, onClose, onUpdateRole }) => {
   return (
     <Modal open={open} onClose={onClose}>
       <div css={styles.modalContent}>
-        <h2>Selecciona el nuevo rol:</h2>
-        <Select value={selectedRole} onChange={handleRoleChange}>
-          <MenuItem value="admin">Admin</MenuItem>
-          <MenuItem value="vip">VIP</MenuItem>
-          <MenuItem value="free">Free</MenuItem>
-          <MenuItem value="demo">Demo</MenuItem>
-        </Select>
-        <Button variant="contained" color="primary" onClick={handleUpdateRole}>
-          Actualizar Rol
-        </Button>
-        <Button variant="contained" color="secondary" onClick={onClose}>
-          Cancelar
-        </Button>
+        <h2>Actualización del usuario</h2>
+        <div css={styles.userType}>
+          <p>Selecciona el tipo de usuario:</p>
+          <Select
+            sx={{ width: 100 }}
+            value={selectedRole}
+            onChange={handleRoleChange}
+          >
+            <MenuItem value="admin">Admin</MenuItem>
+            <MenuItem value="vip">VIP</MenuItem>
+            <MenuItem value="free">Free</MenuItem>
+            <MenuItem value="demo">Demo</MenuItem>
+          </Select>
+        </div>
+        <div css={styles.buttonsContainer}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleUpdateRole}
+          >
+            Actualizar
+          </Button>
+          <Button variant="contained" color="secondary" onClick={onClose}>
+            Cancelar
+          </Button>
+        </div>
       </div>
     </Modal>
   );
@@ -46,6 +59,30 @@ const styles = {
     border-radius: 22px;
     outline: none;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 40%;
+    height: 40%;
+  `,
+  buttonsContainer: css`
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 50%;
+  `,
+  userType: css`
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
   `,
 };
 

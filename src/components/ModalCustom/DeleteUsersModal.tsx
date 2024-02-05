@@ -7,12 +7,14 @@ const DeleteUsersModal = ({ open, onClose, onConfirm }) => {
     <Modal open={open} onClose={onClose}>
       <div css={styles.modalContent}>
         <h2>¿Estás seguro de eliminar los usuarios seleccionados?</h2>
-        <Button variant="contained" color="primary" onClick={onConfirm}>
-          Confirmar
-        </Button>
-        <Button variant="contained" color="secondary" onClick={onClose}>
-          Cancelar
-        </Button>
+        <div css={styles.buttonsContainer}>
+          <Button variant="contained" color="primary" onClick={onConfirm}>
+            Confirmar
+          </Button>
+          <Button variant="contained" color="secondary" onClick={onClose}>
+            Cancelar
+          </Button>
+        </div>
       </div>
     </Modal>
   );
@@ -29,6 +31,20 @@ const styles = {
     border-radius: 22px;
     outline: none;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 20%;
+  `,
+  buttonsContainer: css`
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 50%;
   `,
 };
 

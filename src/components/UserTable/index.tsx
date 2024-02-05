@@ -10,7 +10,7 @@ const columns = [
   { field: "firstName", headerName: "Email", width: 300 },
   { field: "rol", headerName: "Rol", width: 150 },
   { field: "lastName", headerName: "Username", width: 150 },
-  { field: "loginCount", headerName: "Login", type: "number", width: 150 },
+  { field: "loginCount", headerName: "Login", type: "number", width: 50 },
 ];
 
 const UserTable = ({ loading, rows, handleSelectionChange }) => {
