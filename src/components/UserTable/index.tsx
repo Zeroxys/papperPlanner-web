@@ -6,10 +6,10 @@ import CircularProgress from "@mui/material/CircularProgress";
 import userColors from "../../utils/userColors";
 
 const columns = [
-  { field: "id", headerName: "ID", width: 250 },
   { field: "firstName", headerName: "Email", width: 300 },
-  { field: "rol", headerName: "Rol", width: 150 },
+  { field: "rol", headerName: "Rol", width: 100 },
   { field: "lastName", headerName: "Username", width: 150 },
+  { field: "id", headerName: "ID", width: 250 },
   { field: "loginCount", headerName: "Login", type: "number", width: 50 },
 ];
 
@@ -57,9 +57,9 @@ const styles = {
     color: black;
     font-weight: bold;
     font-size: 12px;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
-    border: 2px solid gray;
-    border-radius: 4px;
+    // box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+    // border: 2px solid gray;
+    // border-radius: 4px;
     overflow: hidden;
 
     .MuiDataGrid-row:hover {

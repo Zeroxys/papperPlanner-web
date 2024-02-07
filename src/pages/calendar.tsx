@@ -4,13 +4,14 @@ import Header from "../components/Header";
 import DaysOfMonth from "../components/Days";
 import Schedule from "../components/Schedule";
 import createSocket from "../utils/socket";
+import Layout from "../components/Layout";
 
 const IndexPage = () => {
   useEffect(() => {
-    //  const socket = socketConfiguration()
-    // return () => {
-    //   socket.disconnect();
-    // };
+    const socket = socketConfiguration();
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   const socketConfiguration = () => {
@@ -28,23 +29,24 @@ const IndexPage = () => {
   const handleEnviarMensaje = () => {
     const socket = createSocket("123123123");
     socket.emit("enviarMensajeApp", {
-      mensaje: "Mensaje desde la webapp",
+      mensaje: "Mensaje desde la webapp [Soy native :v]",
       receptor: "reactNativeClientId",
     });
   };
 
   return (
-    <div css={containerStyles}>
-      <Header title={"Calendario"} />
-      <DaysOfMonth />
-      <Schedule />
-      {/* <div> */}
-      {/* <button onClick={handleEnviarMensaje}>
-          Enviar Mensaje al Servidor
-        </button> */}
-
-      {/* </div> */}
-    </div>
+    <Layout>
+      <div css={containerStyles}>
+        <Header title={"Calendario"} />
+        <DaysOfMonth />
+        <Schedule />
+        <div>
+          <button onClick={handleEnviarMensaje}>
+            Enviar Mensaje al Servidor
+          </button>
+        </div>
+      </div>
+    </Layout>
   );
 };
 
@@ -54,6 +56,7 @@ const containerStyles = css`
   margin: 0 auto;
   background-color: white;
   text-align: center;
+  margin-top: 3%;
 
   @media (max-width: 768px) {
     width: 100%;

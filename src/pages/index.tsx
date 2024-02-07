@@ -166,11 +166,13 @@ const IndexPage = () => {
             handleDeleteSelected={handleDeleteSelected}
             selectedRows={selectedRows}
           />
-          <UserTable
-            loading={false}
-            rows={rows}
-            handleSelectionChange={handleSelectionChange}
-          />
+          <div css={styles.usersTableContainer}>
+            <UserTable
+              loading={false}
+              rows={rows}
+              handleSelectionChange={handleSelectionChange}
+            />
+          </div>
         </Box>
       </div>
     </Layout>
@@ -182,7 +184,6 @@ const styles = {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
     width: 100%;
     height: 100vh;
   `,
@@ -192,7 +193,15 @@ const styles = {
     align-items: center;
     flex-direction: column;
     width: 80%;
-    height: 70%;
+    height: 80%;
+  `,
+  usersTableContainer: css`
+    padding: 10px;
+    height: 100%;
+    width: 100%;
+    border-radius: 22px;
+    background-color: white;
+    box-shadow: 7px 8px 16px -2px rgba(0, 0, 0, 0.43);
   `,
 };
 

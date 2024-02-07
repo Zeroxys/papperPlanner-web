@@ -16,6 +16,8 @@ const UserTypeLegend = ({
 }) => {
   return (
     <div css={styles.container}>
+      <div css={styles.generalConfigs}></div>
+
       <div css={styles.typesContainer}>
         {Object.keys(userColors).map((type) => (
           <div
@@ -39,36 +41,43 @@ const UserTypeLegend = ({
           </div>
         ))}
       </div>
-      <div css={styles.buttonsContainer}>
-        <Button
-          sx={styles.addPeople}
-          variant="contained"
-          color="primary"
-          startIcon={<AddIcon />}
-          onClick={handleCreatedSelected}
-        >
-          <PersonIcon />
-        </Button>
-        <Button
-          sx={styles.addPeople}
-          variant="contained"
-          color="secondary"
-          startIcon={<DeleteIcon />}
-          onClick={handleDeleteSelected}
-          disabled={selectedRows?.length === 0}
-        >
-          <PeopleIcon />
-        </Button>
-        <Button
-          sx={styles.addPeople}
-          variant="contained"
-          color="primary"
-          startIcon={<UpdateIcon />}
-          onClick={handleUpdateSelected}
-          disabled={selectedRows?.length === 0}
-        >
-          <PersonIcon />
-        </Button>
+
+      <div css={styles.optionsContainer}>
+        <div css={styles.usersOnlineContainer}>
+          <p>Usuarios conectados:0</p>
+        </div>
+
+        <div css={styles.buttonsContainer}>
+          <Button
+            sx={styles.addPeople}
+            variant="contained"
+            color="primary"
+            startIcon={<AddIcon />}
+            onClick={handleCreatedSelected}
+          >
+            <PersonIcon />
+          </Button>
+          <Button
+            sx={styles.addPeople}
+            variant="contained"
+            color="secondary"
+            startIcon={<DeleteIcon />}
+            onClick={handleDeleteSelected}
+            disabled={selectedRows?.length === 0}
+          >
+            <PeopleIcon />
+          </Button>
+          <Button
+            sx={styles.addPeople}
+            variant="contained"
+            color="primary"
+            startIcon={<UpdateIcon />}
+            onClick={handleUpdateSelected}
+            disabled={selectedRows?.length === 0}
+          >
+            <PersonIcon />
+          </Button>
+        </div>
       </div>
     </div>
   );
@@ -77,27 +86,80 @@ const UserTypeLegend = ({
 const styles = {
   container: css`
     display: flex;
+    justify-content: flex-end;
     width: 100%;
+    margin-bottom: 20px;
   `,
+
+  generalConfigs: css`
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px;
+    height: 80px;
+    border-radius: 20px;
+    margin-right: 20px;
+    background-color: white;
+    box-shadow: 7px 8px 16px -2px rgba(0, 0, 0, 0.43);
+  `,
+
   typesContainer: css`
     display: flex;
     flex-direction: column;
-    width: 100%;
+    justify-content: center;
+    padding: 30px;
+    width: 100px;
+    height: 80px;
+    border-radius: 20px;
+    background-color: white;
+    box-shadow: 7px 8px 16px -2px rgba(0, 0, 0, 0.43);
   `,
   buttonsContainer: css`
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    align-items: flex-start;
+    align-items: center;
     width: 300px;
+    padding: 10px;
+    height: 40px;
+    border-radius: 22px;
+    background-color: white;
+    box-shadow: 7px 8px 16px -2px rgba(0, 0, 0, 0.43);
+    margin-left: 22px;
   `,
   addPeople: css`
     display: flex;
     justify-content: center;
     align-items: center;
     width: 30px;
-    height: 30px;
+    height: 35px;
     border-radius: 100px;
+  `,
+  usersOnlineContainer: css`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 300px;
+    padding: 10px;
+    height: 40px;
+    border-radius: 22px;
+    background-color: white;
+    box-shadow: 7px 8px 16px -2px rgba(0, 0, 0, 0.43);
+    margin-left: 22px;
+    & p {
+      font-size: 16px;
+      font-weight: bold;
+    }
+  `,
+
+  optionsContainer: css`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 100%;
   `,
 };
 

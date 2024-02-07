@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "gatsby";
 import { Drawer, Box } from "@mui/material";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -13,6 +14,21 @@ import { css } from "@emotion/react";
 import colors from "../../utils/colors";
 import useApiFetch from "../../hooks/apiFetch";
 import { useSelector } from "react-redux";
+
+const Menu = [
+  {
+    name: "Usuarios",
+    path: "",
+  },
+  {
+    name: "Calendario",
+    path: "calendar",
+  },
+  {
+    name: "Configuraciones",
+    path: "settings",
+  },
+];
 
 const DrawerMenu = ({ openDrawer, onClose }) => {
   const { fetchApi, loading } = useApiFetch();
@@ -53,30 +69,30 @@ const DrawerMenu = ({ openDrawer, onClose }) => {
       </div>
       <Divider />
       <List>
-        {["Usuarios", "Calendario", "Correo"].map((text, index) => (
-          <ListItem key={text}>
+        {Menu.map((text, index) => (
+          <ListItem key={text} component={Link} to={`/${text.path}`}>
             <ListItemButton>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={text.name} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
       <Divider />
-      <List>
+      {/* <List>
         {["Configuraciones"].map((text, index) => (
           <ListItem key={text}>
             <ListItemButton>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={text.name} />
             </ListItemButton>
           </ListItem>
         ))}
-      </List>
+      </List> */}
     </Box>
   );
 
