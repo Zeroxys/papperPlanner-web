@@ -38,7 +38,7 @@ const MenuBar = () => {
   }, []);
 
   const getUser = async () => {
-    const data = await fetchApi("GET", `/users/${userId}`);
+    const data = await fetchApi("GET", `/user`);
     if (data.success) {
       const { user } = data;
       console.log(data);

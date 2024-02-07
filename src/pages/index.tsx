@@ -80,7 +80,7 @@ const IndexPage = () => {
 
   const createuser = async (user) => {
     dispatch(enableBackdropAction(true));
-    const res = await fetchApi("POST", `/users/create`, user);
+    const res = await fetchApi("POST", `/user/create`, user);
     if (res.success) {
       await getUsers();
       setMessage(res.message);
