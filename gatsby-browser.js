@@ -3,9 +3,18 @@ import { Provider } from "react-redux";
 import BackdropCustom from "./src/components/BackdropCustom";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "./src/redux/store";
+import { navigate } from "gatsby";
 import "./src/styles/global.css";
 
-export const wrapRootElement = ({ element }) => {
+export const ReduxProvider = ({ element }) => {
+  const { bearerToken } = store.getState().auth;
+
+  if (!bearerToken) {
+    navigate("/login");
+  } else {
+    navigate("/");
+  }
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -16,17 +25,6 @@ export const wrapRootElement = ({ element }) => {
   );
 };
 
-export const wrapPageElement = ({ element, props }) => {
-  // console.log(store.getState().auth);
-
-  // const isLoggedIn = store.getState().auth.bearerToken;
-
-  // useEffect(() => {
-  //   if (!isLoggedIn) {
-  //     navigate("/login");
-  //     return null;
-  //   }
-  // }, []);
-
-  return element;
+export const wrapRootElement = ({ element }) => {
+  return <ReduxProvider element={element} />;
 };
