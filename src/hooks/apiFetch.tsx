@@ -43,7 +43,6 @@ const useApiFetch = () => {
           options
         );
         const data = await res.json();
-
         if (data.sucess) {
           if (!bearerInfo.expirationDate) {
             const res = await fetch(`${API_URL}/auth/refresh-token`, {

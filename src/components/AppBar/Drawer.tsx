@@ -37,7 +37,7 @@ const DrawerMenu = ({ openDrawer, onClose }) => {
 
   useEffect(() => {
     getProfileImage();
-  }, []);
+  }, [user]);
 
   const getProfileImage = async () => {
     const image = await fetchApi(

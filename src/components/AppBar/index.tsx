@@ -74,8 +74,9 @@ const MenuBar = () => {
     });
 
     if (res.success) {
-      console.log("res logout", res);
       dispatch(setLogOutAction());
+    } else {
+      console.log("No se puede cerrar la sesión");
     }
   };
 

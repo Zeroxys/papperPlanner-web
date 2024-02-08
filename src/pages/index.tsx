@@ -18,6 +18,10 @@ const IndexPage = () => {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openUpdateRoleModal, setOpenUpdateRoleModal] = useState(false);
   const [openCreateUserModal, setOpenCreateUserModal] = useState(false);
+  const [connectedDevices, setConnectedDevices] = useState({
+    ios: 0,
+    android: 0,
+  });
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const { fetchApi } = useApiFetch();
@@ -39,7 +43,7 @@ const IndexPage = () => {
     const socket = createSocket(_id);
     // Escuchar mensajes desde la app
     socket.on("clientCounts", (datos) => {
-      console.log("Dispositivos Conectados", datos);
+      setConnectedDevices({ ...datos });
     });
 
     return socket;
@@ -179,6 +183,7 @@ const IndexPage = () => {
 
         <Box css={styles.tableContainer}>
           <UserTypeLegend
+            connectedDevices={connectedDevices}
             handleCreatedSelected={handleCreatedSelected}
             handleUpdateSelected={handleUpdateSelected}
             handleDeleteSelected={handleDeleteSelected}

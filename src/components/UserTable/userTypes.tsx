@@ -13,6 +13,7 @@ const UserTypeLegend = ({
   handleDeleteSelected,
   handleCreatedSelected,
   selectedRows,
+  connectedDevices,
 }) => {
   return (
     <div css={styles.container}>
@@ -44,7 +45,11 @@ const UserTypeLegend = ({
 
       <div css={styles.optionsContainer}>
         <div css={styles.usersOnlineContainer}>
-          <p>Usuarios conectados:0</p>
+          <p>Dispositivos conectados</p>
+          <div css={styles.deviceInfo}>
+            <p>Android : {connectedDevices.android}</p>
+            <p>IOS : {connectedDevices.ios}</p>
+          </div>
         </div>
 
         <div css={styles.buttonsContainer}>
@@ -115,6 +120,7 @@ const styles = {
     background-color: white;
     box-shadow: 7px 8px 16px -2px rgba(0, 0, 0, 0.43);
   `,
+
   buttonsContainer: css`
     display: flex;
     flex-direction: row;
@@ -138,8 +144,8 @@ const styles = {
   `,
   usersOnlineContainer: css`
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     width: 300px;
     padding: 10px;
@@ -149,8 +155,21 @@ const styles = {
     box-shadow: 7px 8px 16px -2px rgba(0, 0, 0, 0.43);
     margin-left: 22px;
     & p {
-      font-size: 16px;
-      font-weight: bold;
+      font-size: 14px;
+      padding: 0;
+      margin: 0;
+    }
+  `,
+
+  deviceInfo: css`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 80%;
+    & p {
+      padding: 0;
+      margin: 0;
     }
   `,
 
