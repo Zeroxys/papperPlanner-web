@@ -4,12 +4,13 @@ import Layout from "../components/Layout";
 import UserTypeLegend from "../components/UserTable/userTypes";
 import UserTable from "../components/UserTable";
 import useApiFetch from "../hooks/apiFetch";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { css } from "@emotion/react";
 import { enableBackdropAction } from "../redux/actions/userActions";
 import UpdateUserModal from "../components/ModalCustom/UpdateUserModal";
 import DeleteUsersModal from "../components/ModalCustom/DeleteUsersModal";
 import CreateUserModal from "../components/ModalCustom/CreateUserModal";
+import createSocket from "../utils/socket";
 
 const IndexPage = () => {
   const [rows, setRows] = useState([]);
@@ -19,13 +20,30 @@ const IndexPage = () => {
   const [openCreateUserModal, setOpenCreateUserModal] = useState(false);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
-
   const { fetchApi } = useApiFetch();
   const dispatch = useDispatch();
 
+  const {
+    user: { _id },
+  } = useSelector(({ user }) => user);
+
   useEffect(() => {
     getUsers();
+    const socket = socketConfiguration();
+    return () => {
+      socket.disconnect();
+    };
   }, []);
+
+  const socketConfiguration = () => {
+    const socket = createSocket(_id);
+    // Escuchar mensajes desde la app
+    socket.on("clientCounts", (datos) => {
+      console.log("Dispositivos Conectados", datos);
+    });
+
+    return socket;
+  };
 
   const handleSelectionChange = (newSelection) => {
     setSelectedRows([...newSelection]);
