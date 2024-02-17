@@ -8,7 +8,16 @@ module.exports = {
     siteUrl: `https://www.yourdomain.tld`,
   },
   plugins: [
+    "gatsby-plugin-use-query-params",
     "gatsby-plugin-emotion",
+    {
+      resolve: "gatsby-plugin-react-svg",
+      options: {
+        rule: {
+          include: /assets/,
+        },
+      },
+    },
     {
       resolve: `gatsby-omni-font-loader`,
       options: {

@@ -23,12 +23,15 @@
     "@mui/x-data-grid": "^6.19.2",
     "@react-native-async-storage/async-storage": "^1.21.0",
     "@reduxjs/toolkit": "^2.1.0",
+    "formik": "^2.4.5",
     "gatsby": "^5.13.3",
     "gatsby-omni-font-loader": "^2.0.2",
     "gatsby-plugin-emotion": "^8.13.1",
     "gatsby-plugin-react-redux": "^1.1.0",
     "gatsby-plugin-react-redux-persist": "^1.1.0",
     "gatsby-plugin-react-redux-providers": "^1.0.9",
+    "gatsby-plugin-react-svg": "^3.3.0",
+    "gatsby-plugin-use-query-params": "^1.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
@@ -37,6 +40,8 @@
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^3.1.0",
-    "socket.io-client": "^4.7.2"
+    "socket.io-client": "^4.7.2",
+    "use-query-params": "^2.2.1",
+    "yup": "^1.3.3"
   }
 }

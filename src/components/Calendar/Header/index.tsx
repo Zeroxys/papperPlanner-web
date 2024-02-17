@@ -1,6 +1,6 @@
 import React from "react";
 import { css } from "@emotion/react";
-import colors from "../../utils/colors";
+import colors from "../../../utils/colors";
 
 const Header = ({ back = false, title }) => {
   return (
