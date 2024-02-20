@@ -132,7 +132,6 @@ const styles = {
 
     @media (max-width: 600px) {
       min-width: 80%;
-      // height: 70%;
     }
   `,
   circle: css`

@@ -16,7 +16,7 @@ const styles = {
   `,
   mainContainer: css`
     display: flex;
-    height: 60px;
+    height: 70px;
     display: flex;
     align-items: center;
     justify-content: center;

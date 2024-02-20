@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
-import CircularProgress from "@mui/material/CircularProgress";
 import Header from "../components/Calendar/Header";
 import DaysOfMonth from "../components/Calendar/Days";
 import Schedule from "../components/Calendar/Schedule";
@@ -8,22 +7,31 @@ import MonthSelector from "../components/Calendar/MonthSelector";
 import createSocket from "../utils/socket";
 import useApiFetch from "../hooks/apiFetch";
 import colors from "../utils/colors";
+import NotFound from "../assets/svg/notFound.svg";
+import NotFoundCalendar from "../assets/svg/notFoundCalendar.svg";
+import { useSelector } from "react-redux";
 
 const IndexPage = ({ location }) => {
-  // Estados
-  const [loading, setLoading] = useState(false);
   const [events, setEvents] = useState([]);
   const [configuration, setConfiguration] = useState({});
+  const [notFoundEvents, setNotFoundEvents] = useState(false);
+  const [notFoundCalendar, setnotFoundCalendar] = useState(false); // Estado para la segunda imagen
   const [month, setSelectMonth] = useState(
     new Date().toLocaleString("default", { month: "long" })
   );
+
   const [day, setSelectDay] = useState(new Date().getDate());
   const { fetchApi } = useApiFetch();
   const calendarId = new URLSearchParams(location.search).get("id");
+  const { enableBackdrop } = useSelector(({ user }) => user);
 
   useEffect(() => {
     getCalendar();
-  }, [month]);
+  }, [enableBackdrop]);
+
+  useEffect(() => {
+    getCalendar();
+  }, [month, day]);
 
   useEffect(() => {
     const socket = socketConfiguration();
@@ -32,9 +40,7 @@ const IndexPage = ({ location }) => {
     };
   }, []);
 
-  // Funciones auxiliares
   const getCalendar = async () => {
-    // setLoading(true);
     const res = await fetchApi("POST", `/calendar-public`, {
       id: calendarId,
       month,
@@ -43,8 +49,12 @@ const IndexPage = ({ location }) => {
     if (res.success) {
       setConfiguration(res.configuration);
       setEvents(res.events);
+      if (res.events.length === 0) {
+        setNotFoundEvents(true);
+      }
+    } else {
+      setnotFoundCalendar(true);
     }
-    // setLoading(false);
   };
 
   const socketConfiguration = () => {
@@ -59,37 +69,57 @@ const IndexPage = ({ location }) => {
   return (
     <div css={styles.containerStyles}>
       <Header title={"Calendario"} />
-      {loading ? (
-        <div css={styles.loaderContainer}>
-          <CircularProgress />
-        </div>
-      ) : (
-        <>
-          <div css={styles.contentContainerStyles}>
-            <div css={styles.monthSelectorContainerStyles}>
-              <MonthSelector
-                currentMonth={month}
-                onSelectMonth={(month) => setSelectMonth(month)}
+      <div css={styles.calendarContainer}>
+        <MonthSelector
+          currentMonth={month}
+          onSelectMonth={(month) => setSelectMonth(month)}
+        />
+
+        <div css={styles.scrollableContent}>
+          {events.length > 0 ? (
+            <>
+              <DaysOfMonth
+                daysOfWeekAvailables={configuration.daysOfWeekAvailables}
+                onSelectDay={({ date }) => setSelectDay(date)}
               />
+              <Schedule
+                calendarId={calendarId}
+                events={events}
+                currentMonth={month}
+              />
+            </>
+          ) : (
+            <div
+              css={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {notFoundEvents && !notFoundCalendar ? (
+                <NotFound css={{ width: 300, padding: 0, margin: 0 }} />
+              ) : notFoundCalendar ? (
+                <NotFoundCalendar css={{ width: 300, padding: 0, margin: 0 }} />
+              ) : null}
+              <p
+                css={{
+                  color: colors.purple,
+                  fontSize: 22,
+                  fontWeight: "bold",
+                  position: "absolute",
+                  top: 150,
+                }}
+              >
+                {notFoundCalendar
+                  ? "Calendario no encontrado."
+                  : "El calendario aún no cuenta con eventos disponibles."}
+              </p>
             </div>
-            <div css={styles.infoContainerStyles}>
-              <p css={styles.infoItemStyles}>Miguel Angel Zavala Castillo</p>
-              <p css={styles.infoItemStyles}>Mar Jonico 221. cp 123123</p>
-              <p css={styles.infoItemStyles}>miguelzavalac@gmail.com</p>
-            </div>
-          </div>
-          <div style={styles.daysContainer}>
-            <DaysOfMonth
-              daysOfWeekAvailables={configuration.daysOfWeekAvailables}
-              onSelectDay={({ date }) => setSelectDay(date)}
-            />
-          </div>
-          <div css={styles.scheduleContainerStyles}>
-            <Schedule events={events} />
-          </div>
-        </>
-      )}
-      <div css={styles.wave}></div>
+          )}
+        </div>
+      </div>
+      <div css={styles.footer} />
     </div>
   );
 };
@@ -101,61 +131,50 @@ const styles = {
     flex-direction: column;
     justify-content: flex-start;
     flex: 1;
-    width: 40%;
-    max-width: 800px;
+    width: 500px;
+    max-width: 500px;
     margin: 0 auto;
     background-color: white;
-    text-align: center;
     height: 100vh;
-    z-index: 9;
 
     @media (max-width: 768px) {
       width: 100%;
     }
   `,
-  wave: css`
-    width: 100%;
-    height: 10%;
+
+  calendarContainer: css`
+    padding-left: 10px;
+    padding-right: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex: 1;
+    width: 480px;
+    background-color: white;
+    text-align: center;
+
+    @media (max-width: 768px) {
+      width: 90%;
+      padding-left: 5%;
+      padding-right: 5%;
+    }
+  `,
+
+  scrollableContent: css`
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+  `,
+
+  footer: css`
+    height: 70px;
+    z-index: 999;
     background-color: ${colors.purple};
   `,
-  contentContainerStyles: css`
-    display: flex;
-    padding: 0 20px 0 15px;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 95%;
-    margin-top: 20px;
-  `,
-  monthSelectorContainerStyles: css`
-    width: 40%;
-  `,
-  daysContainer: css`
-    margin-top: 10%;
-  `,
-  infoContainerStyles: css`
-    width: 40%;
-  `,
-  infoItemStyles: css`
-    color: ${colors.purple};
-    font-weight: bold;
-    padding: 0;
-    margin: 5px;
-    font-size: 12px;
-  `,
-  scheduleContainerStyles: css`
-    margin-top: 22px;
-    height: 60%;
-    overflow-y: auto;
-    &::-webkit-scrollbar {
-      width: 4px;
-    }
-    &::-webkit-scrollbar-track {
-      background: ${colors.white};
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: ${colors.purple};
-      border-radius: 20px;
-    }
+
+  errorImage: css`
+    width: 200px;
+    height: 200px;
   `,
 };
 

@@ -1,5 +1,3 @@
-import { navigate } from "gatsby";
-
 export const enableSaveUserAction = () => ({
   type: "ENABLE_SAVE_USER",
 });

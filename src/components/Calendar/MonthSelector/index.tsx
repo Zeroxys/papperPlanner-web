@@ -19,7 +19,7 @@ const MonthSelector = ({ currentMonth, onSelectMonth }) => {
     "October",
     "November",
     "December",
-  ].slice(currentMonthIndex); // Slice to start from the current month
+  ].slice(currentMonthIndex);
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -41,9 +41,11 @@ const MonthSelector = ({ currentMonth, onSelectMonth }) => {
       fullWidth
       value={currentMonth}
       onChange={handleChange}
+      sx={{ marginTop: 2, marginBottom: 2 }}
       options={filteredMonths}
       renderInput={(params) => (
         <TextField
+          contentEditable={false}
           {...params}
           label="Selecciona un mes..."
           variant="outlined"
