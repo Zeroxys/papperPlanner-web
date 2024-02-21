@@ -11,11 +11,37 @@ import NotFound from "../assets/svg/notFound.svg";
 import NotFoundCalendar from "../assets/svg/notFoundCalendar.svg";
 import { useSelector } from "react-redux";
 
+const Metas = ({ username }) => {
+  return (
+    <>
+      <title>{username} - Calendario</title>
+
+      <meta
+        name="description"
+        content="Explora nuestro calendario interactivo y descubre eventos emocionantes para cada día. ¡No te pierdas ninguna actividad interesante!"
+      />
+
+      <meta
+        property="og:title"
+        content={`${username} - Calendario: Encuentra eventos emocionantes para cada día`}
+      />
+
+      <meta
+        property="og:description"
+        content="Explora nuestro calendario interactivo y descubre eventos emocionantes para cada día. ¡No te pierdas ninguna actividad interesante!"
+      />
+
+      <meta property="og:image" content="URL_de_la_imagen" />
+    </>
+  );
+};
+
 const IndexPage = ({ location }) => {
+  const [user, setUser] = useState({});
   const [events, setEvents] = useState([]);
   const [configuration, setConfiguration] = useState({});
   const [notFoundEvents, setNotFoundEvents] = useState(false);
-  const [notFoundCalendar, setnotFoundCalendar] = useState(false); // Estado para la segunda imagen
+  const [notFoundCalendar, setnotFoundCalendar] = useState(false);
   const [month, setSelectMonth] = useState(
     new Date().toLocaleString("default", { month: "long" })
   );
@@ -47,6 +73,7 @@ const IndexPage = ({ location }) => {
       day,
     });
     if (res.success) {
+      setUser(res.user);
       setConfiguration(res.configuration);
       setEvents(res.events);
       if (res.events.length === 0) {
@@ -120,6 +147,7 @@ const IndexPage = ({ location }) => {
         </div>
       </div>
       <div css={styles.footer} />
+      <Metas username={user.username} />
     </div>
   );
 };
