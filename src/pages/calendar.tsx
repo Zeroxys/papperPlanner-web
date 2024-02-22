@@ -183,7 +183,6 @@ const IndexPage = ({ location }) => {
         </div>
       </div>
       <div css={styles.footer} />
-      <Metas username={user.username} />
     </div>
   );
 };
@@ -243,3 +242,4 @@ const styles = {
 };
 
 export default IndexPage;
+export const Head = () => <Metas username={"Miguel Zavala"} />;
