@@ -21,46 +21,10 @@ const Metas = ({ username }) => {
 
   return (
     <>
-      <title>{username} - Calendario</title>
-
+      <title>Miguuel Zavala - Calendario</title>
       <meta
         name="description"
         content="Explora nuestro calendario interactivo y descubre eventos emocionantes para cada día. ¡No te pierdas ninguna actividad interesante!"
-      />
-
-      <meta
-        property="og:title"
-        content={`${username} - Calendario: Encuentra eventos emocionantes para cada día`}
-      />
-
-      <meta
-        property="og:description"
-        content="Explora nuestro calendario interactivo y descubre eventos emocionantes para cada día. ¡No te pierdas ninguna actividad interesante!"
-      />
-
-      <meta
-        property="og:image"
-        content="https://i.ibb.co/94NhgBb/Drawing-sketchpad-1.png"
-      />
-
-      <meta property="og:url" content={API_URL + "/calendar"} />
-      <meta property="og:type" content="website" />
-
-      <meta property="og:title" content={twitterTitle} />
-      <meta property="og:description" content={twitterDescription} />
-      <meta
-        property="og:image"
-        content="https://i.ibb.co/94NhgBb/Drawing-sketchpad-1.png"
-      />
-
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta property="twitter:domain" content={API_URL} />
-      <meta property="twitter:url" content={API_URL + "/calendar"} />
-      <meta name="twitter:title" content={twitterTitle} />
-      <meta name="twitter:description" content={twitterDescription} />
-      <meta
-        name="twitter:image"
-        content="https://i.ibb.co/94NhgBb/Drawing-sketchpad-1.png"
       />
 
       <meta
@@ -68,9 +32,11 @@ const Metas = ({ username }) => {
         content="https://papperplanner-web-dev.up.railway.app/calendar"
       />
       <meta property="og:type" content="website" />
-      <meta property="og:title" content="" />
-      <meta property="og:description" content="" />
-
+      <meta property="og:title" content="Miguuel Zavala - Calendario" />
+      <meta
+        property="og:description"
+        content="Explora nuestro calendario interactivo y descubre eventos emocionantes para cada día. ¡No te pierdas ninguna actividad interesante!"
+      />
       <meta
         property="og:image"
         content="https://ogcdn.net/e4b8c678-7bd5-445d-ba03-bfaad510c686/v3/papperplanner-web-dev.up.railway.app/Get%20On%20Board%20Meta%20Ads%20Campaigns/https%3A%2F%2Fopengraph.b-cdn.net%2Fproduction%2Fdocuments%2Fad682ef0-d779-4e8c-a3d2-557789fc590e.png%3Ftoken%3DuAQauC-LyAWP8gAGHyZ4kA-zJDJgPiE-bVi4v880c5o%26height%3D630%26width%3D1200%26expires%3D33244565861/og.png"
@@ -85,8 +51,12 @@ const Metas = ({ username }) => {
         property="twitter:url"
         content="https://papperplanner-web-dev.up.railway.app/calendar"
       />
-      <meta name="twitter:title" content="" />
-      <meta name="twitter:description" content="" />
+      <meta name="twitter:title" content="Miguuel Zavala - Calendario" />
+      <meta
+        name="twitter:description"
+        content="Explora nuestro calendario interactivo y descubre eventos emocionantes para cada día. ¡No te pierdas ninguna actividad interesante!"
+      />
+
       <meta
         name="twitter:image"
         content="https://ogcdn.net/e4b8c678-7bd5-445d-ba03-bfaad510c686/v3/papperplanner-web-dev.up.railway.app/Get%20On%20Board%20Meta%20Ads%20Campaigns/https%3A%2F%2Fopengraph.b-cdn.net%2Fproduction%2Fdocuments%2Fad682ef0-d779-4e8c-a3d2-557789fc590e.png%3Ftoken%3DuAQauC-LyAWP8gAGHyZ4kA-zJDJgPiE-bVi4v880c5o%26height%3D630%26width%3D1200%26expires%3D33244565861/og.png"
