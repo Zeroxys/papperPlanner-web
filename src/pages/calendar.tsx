@@ -12,6 +12,13 @@ import NotFoundCalendar from "../assets/svg/notFoundCalendar.svg";
 import { useSelector } from "react-redux";
 
 const Metas = ({ username }) => {
+  const API_URL = process.env.GATSBY_HOST_URL;
+
+  const twitterTitle = `${username} - Calendario: Encuentra eventos emocionantes para cada día`;
+
+  const twitterDescription =
+    "Explora nuestro calendario interactivo y descubre eventos emocionantes para cada día. ¡No te pierdas ninguna actividad interesante!";
+
   return (
     <>
       <title>{username} - Calendario</title>
@@ -31,7 +38,36 @@ const Metas = ({ username }) => {
         content="Explora nuestro calendario interactivo y descubre eventos emocionantes para cada día. ¡No te pierdas ninguna actividad interesante!"
       />
 
-      <meta property="og:image" content="URL_de_la_imagen" />
+      <meta
+        property="og:image"
+        content="https://i.ibb.co/94NhgBb/Drawing-sketchpad-1.png"
+      />
+
+      <meta property="og:url" content={API_URL + "/calendar"} />
+      <meta property="og:type" content="website" />
+
+      {/* Las siguientes líneas de metaetiquetas para Open Graph y Twitter están vacías,
+          ya que no se proporcionó información específica para ellas.
+          Puedes reemplazar los valores de las propiedades "content" según sea necesario. */}
+
+      {/* Metaetiquetas para Open Graph */}
+      <meta property="og:title" content={twitterTitle} />
+      <meta property="og:description" content={twitterDescription} />
+      <meta
+        property="og:image"
+        content="https://i.ibb.co/94NhgBb/Drawing-sketchpad-1.png"
+      />
+
+      {/* Metaetiquetas para Twitter */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta property="twitter:domain" content={API_URL} />
+      <meta property="twitter:url" content={API_URL + "/calendar"} />
+      <meta name="twitter:title" content={twitterTitle} />
+      <meta name="twitter:description" content={twitterDescription} />
+      <meta
+        name="twitter:image"
+        content="https://i.ibb.co/94NhgBb/Drawing-sketchpad-1.png"
+      />
     </>
   );
 };
