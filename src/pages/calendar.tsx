@@ -183,7 +183,7 @@ const styles = {
 export default IndexPage;
 export const Head = () => (
   <>
-    <title>Miguuel Zavala - Calendario</title>
+    <title>Miguel Zavala - Calendario</title>
     <meta
       name="description"
       content="Explora nuestro calendario interactivo y descubre eventos emocionantes para cada día. ¡No te pierdas ninguna actividad interesante!"
