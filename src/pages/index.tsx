@@ -150,7 +150,7 @@ const IndexPage = () => {
   };
 
   return (
-    <Layout>
+    <Layout verified={true}>
       <CreateUserModal
         open={openCreateUserModal}
         onClose={handleCloseCreateUserModal}
