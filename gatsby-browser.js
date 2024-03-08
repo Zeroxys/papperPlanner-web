@@ -13,8 +13,9 @@ export const ReduxProvider = ({ element }) => {
     const { pathname } = window.location;
     // const isCalendarRoute = /^\/calendar\/\w+$/.test(pathname);
     const isCalendarRoute = /^\/calendar\//.test(pathname);
-
-    if (!bearerToken && !isCalendarRoute) {
+    const isVerifyEmailRoute = /^\/verifyEmail\//.test(pathname);
+    
+    if (!bearerToken && !isCalendarRoute && !isVerifyEmailRoute) {
       navigate("/login");
       return (
         <Provider store={store}>
@@ -48,6 +49,17 @@ export const ReduxProvider = ({ element }) => {
         </Provider>
       );
     }
+
+
+    return (
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <BackdropCustom />
+          {element}
+        </PersistGate>
+      </Provider>
+    );
+
 
     // return (
     //   <Provider store={store}>
